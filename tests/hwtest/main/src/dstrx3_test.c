@@ -64,3 +64,20 @@ int dstrx3_test(struct dstrx3_test_ret *dstrx3_ret, uint32_t *err_cnt, bool log)
 
 	return ret;
 }
+
+void dstrx3_downlink_loop_test(uint32_t loop)
+{
+	const struct device *dev = DEVICE_DT_GET(DT_NODELABEL(dstrx));
+	uint8_t data[1];
+
+	sc_dstrx3_enable_downlink(dev);
+
+	sc_dstrx3_set_downlink_control(dev, DLD_ZPADDING_EN);
+
+	for (uint32_t i=0; i<loop; i++) {
+		data[0] = i % 0xFF;
+		sc_dstrx3_downlink_data(dev, data, 1);
+	}
+
+	sc_dstrx3_disable_downlink(dev);
+}
