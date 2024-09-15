@@ -14,6 +14,22 @@ config SCSAT1_MAIN_CAP_INTERVAL_SEC
 	help
 	  Interval (seconds) of capture frame command
 
+choice
+	prompt "Magnet Meter device type"
+	default SCSAT1_MGNM_DEV_TYPE_MMC5883MA
+
+config SCSAT1_MGNM_DEV_TYPE_MMC5883MA
+	bool "Magnet Meter MMC5883MA"
+	help
+	  Magnet Meter MMC5883MA for SC-Sat1 FM
+
+config SCSAT1_MGNM_DEV_TYPE_MMC5983MA
+	bool "Magnet Meter MMC5983MA"
+	help
+	  Magnet Meter MMC5983MA for SC-Sat1 EM
+
+endchoice
+
 endmenu
 
 menu "Zephyr"
