@@ -5,9 +5,11 @@
  */
 
 #include <zephyr/kernel.h>
+#include <zephyr/storage/flash_map.h>
 #include "common.h"
 #include "pwrctrl.h"
 #include "sysmon.h"
+#include "flash.h"
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main_init);
@@ -18,6 +20,10 @@ int main_init(enum hwtest_mode mode, uint32_t *err_cnt)
 {
 	int ret;
 	int all_ret = 0;
+
+	sc_erase_cfg_mem(0, 0, 0, FIXED_PARTITION_SIZE(bit_partition));
+	sc_erase_cfg_mem(0, 1, 0, FIXED_PARTITION_SIZE(fsw_partition));
+	goto end;
 
 	if (mode >= TEST_MODE_NUM) {
 		LOG_ERR("Invalid test mode. (%d)", mode);
