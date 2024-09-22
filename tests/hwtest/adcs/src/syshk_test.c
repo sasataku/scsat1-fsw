@@ -142,7 +142,7 @@ int syshk_test(int32_t loop_count, uint32_t *err_cnt)
 			break;
 		}
 
-		ret = rw_start(pos_list[rw_idx], RW_HALF_POTENTION);
+		ret = rw_start(pos_list[rw_idx], RW_MAX_POTENTION);
 		if (ret < 0) {
 			(*err_cnt)++;
 			all_ret = -1;
@@ -153,7 +153,7 @@ int syshk_test(int32_t loop_count, uint32_t *err_cnt)
 			all_ret = -1;
 		}
 
-		ret = rw_change_speed(pos_list[rw_idx], 0x20);
+		ret = rw_change_speed(pos_list[rw_idx], RW_HALF_POTENTION);
 		if (ret < 0) {
 			(*err_cnt)++;
 			all_ret = -1;
