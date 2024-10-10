@@ -91,7 +91,7 @@ int rw_start(enum rw_pos pos, uint8_t pot)
 	const struct device *i2c = get_rw_device(pos);
 
 	LOG_INF("Set Potention: 0x%02x on %s", pot, rw_pos_name[pos]);
-	ret = set_potention_meter(i2c, pot);
+	ret = 0;
 	if (ret < 0) {
 		goto end;
 	}

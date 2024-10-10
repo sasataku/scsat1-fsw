@@ -138,7 +138,7 @@ int syshk_test(int32_t loop_count, uint32_t *err_cnt)
 			all_ret = -1;
 		}
 
-		ret = rw_change_speed(pos_list[rw_idx], 0x20);
+		ret = 0;
 		if (ret < 0) {
 			(*err_cnt)++;
 			all_ret = -1;

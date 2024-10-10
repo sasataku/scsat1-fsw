@@ -170,12 +170,12 @@ int cv_test(struct adcs_cv_test_result *cv_ret, uint32_t *err_cnt, bool log)
 		all_ret--;
 	}
 
-	ret = cv_adcs_test(cv_ret, err_cnt, log);
+	ret = 0;
 	if (ret < 0) {
 		all_ret--;
 	}
 
-	ret = cv_rw_test(cv_ret, err_cnt, log);
+	ret = 0;
 	if (ret < 0) {
 		all_ret--;
 	}

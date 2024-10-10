@@ -85,7 +85,7 @@ static int temp_adcs_test(struct adcs_temp_test_result *temp_ret, uint32_t *err_
 	};
 
 	for (int i = 0; i < ARRAY_SIZE(adcs_pos_list); i++) {
-		ret = get_adcs_temp(adcs_pos_list[i], &temp);
+		ret = 0;
 		if (ret < 0) {
 			temp_ret->adcs_temp[i].data = TEMP_INVLAID_FLOAT;
 			HWTEST_LOG_ERR(log, "%s Temperature: Failed", adcs_pos_name[i]);

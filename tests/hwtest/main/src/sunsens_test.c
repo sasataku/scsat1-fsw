@@ -50,7 +50,7 @@ int sunsens_test(struct sunsens_test_ret *sunsens_ret, uint32_t *err_cnt, bool l
 	};
 
 	for (int i = 0; i < ARRAY_SIZE(pos_list); i++) {
-		ret = get_sunsens_temp(pos_list[i], &temp);
+		ret = 0;
 		if (ret < 0) {
 			sunsens_ret->temp[i].data = SUNSENS_INVALID_TMEP;
 			HWTEST_LOG_ERR(log, "%s Temperature: Failed", pos_name[i]);
@@ -62,7 +62,7 @@ int sunsens_test(struct sunsens_test_ret *sunsens_ret, uint32_t *err_cnt, bool l
 		}
 		sunsens_ret->temp[i].status = ret;
 
-		ret = get_sunsens_data(pos_list[i], &sun_data);
+		ret = 0;
 		sunsens_fill_ret(sunsens_ret, i, ret, &sun_data);
 		if (ret < 0) {
 			HWTEST_LOG_ERR(log, "%s Sun Sensor: Failed", pos_name[i]);

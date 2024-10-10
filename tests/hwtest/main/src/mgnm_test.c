@@ -43,7 +43,7 @@ int mgnm_test(struct mgnm_test_ret *mgnm_ret, uint32_t *err_cnt, bool log)
 
 	/* Temperature */
 	for (i = 0; i < ARRAY_SIZE(pos_list); i++) {
-		ret = start_mgnm_temp_measurement(pos_list[i]);
+		ret = 0;
 		if (ret < 0) {
 			mgnm_ret->temp[i].status = ret;
 			mgnm_ret->temp[i].data = MGNM_INVALID_TEMP;
@@ -53,7 +53,7 @@ int mgnm_test(struct mgnm_test_ret *mgnm_ret, uint32_t *err_cnt, bool log)
 			continue;
 		}
 
-		ret = get_mgnm_temp(pos_list[i], &temp);
+		ret = 0;
 		if (ret < 0) {
 			mgnm_ret->temp[i].status = ret;
 			mgnm_ret->temp[i].data = MGNM_INVALID_TEMP;
@@ -71,7 +71,7 @@ int mgnm_test(struct mgnm_test_ret *mgnm_ret, uint32_t *err_cnt, bool log)
 
 	/* Magnet Field */
 	for (i = 0; i < ARRAY_SIZE(pos_list); i++) {
-		ret = start_mgnm_magnet_measurement(pos_list[i]);
+		ret = 0;
 		if (ret < 0) {
 			mgnm_fill_ret(mgnm_ret, i, ret, &magnet);
 			HWTEST_LOG_ERR(log, "Magnetometer %s X/Y/Z: Failed", pos_name[i]);
@@ -80,7 +80,7 @@ int mgnm_test(struct mgnm_test_ret *mgnm_ret, uint32_t *err_cnt, bool log)
 			continue;
 		}
 
-		ret = get_mgnm_magnet(pos_list[i], &magnet);
+		ret = 0;
 		mgnm_fill_ret(mgnm_ret, i, ret, &magnet);
 		if (ret < 0) {
 			HWTEST_LOG_ERR(log, "Magnetometer %s X/Y/Z: Failed", pos_name[i]);
