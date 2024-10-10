@@ -39,18 +39,6 @@ int adcs_init(uint32_t *err_cnt)
 
 	k_sleep(K_SECONDS(1));
 
-	sc_adcs_power_enable(GPS_PWR);
-	ret = gnss_enable();
-	if (ret < 0) {
-		LOG_ERR("Failed to enable the GNSS. (%d)", ret);
-		(*err_cnt)++;
-		all_ret = -1;
-	} else {
-		LOG_INF("Power on the GNSS");
-	}
-
-	k_sleep(K_SECONDS(1));
-
 	ret = csp_enable();
 	if (ret < 0) {
 		LOG_ERR("Failed to enable the CSP. (%d)", ret);

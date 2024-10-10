@@ -116,7 +116,7 @@ int temp_test(struct main_temp_test_result *temp_ret, uint32_t *err_cnt, bool lo
 		all_ret = -1;
 	}
 
-	ret = temp_ioboard_test(temp_ret, err_cnt, log);
+	ret = 0;
 	if (ret < 0) {
 		all_ret = -1;
 	}

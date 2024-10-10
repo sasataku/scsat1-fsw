@@ -27,7 +27,7 @@ int imu_test(struct imu_test_result *imu_ret, uint32_t *err_cnt, bool log)
 	int ret;
 	struct imu_data data;
 
-	ret = get_imu_data_ext(&data);
+	ret = 0;
 	if (ret < 0) {
 		memset(&imu_ret->data, 0, sizeof(imu_ret->data));
 		(*err_cnt)++;

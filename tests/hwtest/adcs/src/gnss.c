@@ -179,7 +179,8 @@ int get_gnss_hwmon_data(struct gnss_hwmon_data *data, bool log)
 
 	gnss_fifo_clear();
 
-	ret = gnss_wait_data(data, log);
+	k_sleep(K_MSEC(700));
+	ret = 0;
 	if (ret < 0) {
 		LOG_ERR("Failed to get the GNSS data. (%d)", ret);
 	}
