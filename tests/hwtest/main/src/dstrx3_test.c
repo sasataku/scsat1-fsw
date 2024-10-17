@@ -11,6 +11,8 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(dstrx3_test, CONFIG_SCSAT1_MAIN_LOG_LEVEL);
 
+#define DSTRX3_MAX_DOWNLINK_DATA_SIZE (217U)
+
 static void dstrx3_print_hk(struct sc_dstrx3_hk *hk)
 {
 	LOG_INF("DSTRX-3 HK FREE_COUNTER     : %d", hk->free_count);
@@ -29,6 +31,15 @@ static void dstrx3_print_hk(struct sc_dstrx3_hk *hk)
 	LOG_INF("DSTRX-3 HK BIT_RATE_SET     : %d", hk->bit_rate_set);
 	LOG_INF("DSTRX-3 HK PROG_NO          : %d", hk->program_no);
 	LOG_INF("DSTRX-3 HK CHK_SUM          : %d", hk->checksum);
+}
+
+static void dstrx3_create_test_downlink_data(uint32_t start_no, uint8_t *data, size_t size)
+{
+	data[0] = start_no % 0xFF;
+
+	for (uint32_t i = 1; i < size; i++) {
+		data[i] = data[i - 1] + 1;
+	}
 }
 
 int dstrx3_test(struct dstrx3_test_ret *dstrx3_ret, uint32_t *err_cnt, bool log)
@@ -68,20 +79,17 @@ int dstrx3_test(struct dstrx3_test_ret *dstrx3_ret, uint32_t *err_cnt, bool log)
 void dstrx3_downlink_loop_test(uint32_t loop, uint8_t flags)
 {
 	const struct device *dev = DEVICE_DT_GET(DT_NODELABEL(dstrx));
-	uint8_t data[4];
+	uint8_t data[DSTRX3_MAX_DOWNLINK_DATA_SIZE];
 
 	sc_dstrx3_enable_downlink(dev);
 
 	sc_dstrx3_set_downlink_control(dev, flags);
 
 	for (uint32_t i = 0; i < loop; i++) {
-		data[0] = i % 0xFF;
-		data[1] = data[0] + 1;
-		data[2] = data[1] + 1;
-		data[3] = data[2] + 1;
-		sc_dstrx3_downlink_data(dev, data, 4);
-		LOG_INF("Downlink 0x%02x 0x%02x 0x%02x 0x%02x to Ground with flags 0x%02x", data[0],
-			data[1], data[2], data[3], flags);
+		dstrx3_create_test_downlink_data(i, data, sizeof(data));
+		sc_dstrx3_downlink_data(dev, data, sizeof(data));
+		LOG_INF("Downlink (start from 0x%02x) (%d byte) to Ground with flags 0x%02x",
+			data[0], sizeof(data), flags);
 		k_sleep(K_SECONDS(1));
 	}
 
