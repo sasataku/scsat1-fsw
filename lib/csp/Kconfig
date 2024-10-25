@@ -16,6 +16,12 @@ config SC_LIB_CSP_FILE_NAME_MAX_LEN
 	help
 	  File name max length for csp commands
 
+config SC_LIB_CSP_UPLOAD_DATA_LEN
+	int "Data length for upload"
+	default 200
+	help
+	  Data length for upload.
+
 module = SC_LIB_CSP
 module-str = Space Cubics CSP libraries
 source "subsys/logging/Kconfig.template.log_config"
