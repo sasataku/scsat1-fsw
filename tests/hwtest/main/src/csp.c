@@ -111,8 +111,10 @@ int csp_enable(void)
 	const struct device *can1 = DEVICE_DT_GET(DT_NODELABEL(can0));
 	const struct device *can2 = DEVICE_DT_GET(DT_NODELABEL(can1));
 	uint32_t bitrate = 1000000;
-	uint16_t filter_addr = CSP_ID_MAIN;
-	uint16_t filter_mask = 0x1F;
+	uint16_t filter_addr1 = CSP_ID_MAIN_CAN1;
+	uint16_t filter_mask1 = 0x1F;
+	uint16_t filter_addr2 = CSP_ID_MAIN_CAN2;
+	uint16_t filter_mask2 = 0x1F;
 
 	LOG_INF("Initialising CSP");
 
@@ -120,16 +122,16 @@ int csp_enable(void)
 
 	csp_init();
 
-	ret = csp_can_open_and_add_interface(can1, ifname1, CSP_ID_MAIN, bitrate, filter_addr,
-					     filter_mask, &can_iface1);
+	ret = csp_can_open_and_add_interface(can1, ifname1, CSP_ID_MAIN_CAN1, bitrate, filter_addr1,
+					     filter_mask1, &can_iface1);
 	if (ret != CSP_ERR_NONE) {
 		LOG_ERR("failed to add CAN interface [%s], error: %d\n", ifname1, ret);
 		goto end;
 	}
 	can_iface1->is_default = 1;
 
-	ret = csp_can_open_and_add_interface(can2, ifname2, CSP_ID_MAIN, bitrate, filter_addr,
-					     filter_mask, &can_iface2);
+	ret = csp_can_open_and_add_interface(can2, ifname2, CSP_ID_MAIN_CAN2, bitrate, filter_addr2,
+					     filter_mask2, &can_iface2);
 	if (ret != CSP_ERR_NONE) {
 		LOG_ERR("failed to add CAN interface [%s], error: %d\n", ifname1, ret);
 		goto end;
