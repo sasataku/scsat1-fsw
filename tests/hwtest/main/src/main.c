@@ -22,6 +22,7 @@
 #include "loop_test.h"
 #include "syshk_test.h"
 #include "data_nor.h"
+#include "fram.h"
 #include "sc_fpgaconf.h"
 #include "sc_fpgasys.h"
 #include "sc_fpgamon.h"
@@ -32,7 +33,6 @@ LOG_MODULE_REGISTER(main, CONFIG_SCSAT1_MAIN_LOG_LEVEL);
 
 #define CMD_HANDLER_PRIO (0U)
 #define CMD_EXEC_EVENT   (1U)
-#define BOOT_COUNT_FILE  CONFIG_SC_LIB_FLASH_DATA_STORE_MNT_POINT "/boot.count"
 
 char last_cmd[32];
 
@@ -163,7 +163,7 @@ int main(void)
 
 	k_event_init(&exec_event);
 
-	update_boot_count(BOOT_COUNT_FILE);
+	sc_fram_update_boot_count();
 
 	ret = csp_enable();
 	if (ret < 0) {
